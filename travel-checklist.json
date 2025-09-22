@@ -1,33 +1,133 @@
 {
   "Clothes": [
-    "Underwear",
-    "Sleepwear"
+    "Undergarmets",
+    "Top & Bottom wears",
+    "Jacket/Blazer/Coat",
+    "Sweaters/Hoodies",
+    "Thermal Inner Wear",
+    "Windcheater",
+    "Swimwear & Glasses",
+    "Nightwear",
+    "Shorts & Lowers",
+    "Hotel wear"
   ],
   "Accessories": [
+    "Watches",
+    "Footwear & Socks",
+    "Belt(Brown, Black)",
+    "Handkerchiefs",
     "Sunglasses",
-    "Watch"
+    "Cap/Hat",
+    "Gloves & Muffles",
+    "Umbrella",
+    "Rain Coat",
+    "Hiking Shoes(O)",
+    "Travel Pillow, Mask, Ear Plug",
+    "Perfumes",
+    "Body Deodrant",
+    "Crocs",
+    "Slippers",
+    "Jewellery",
+    "Bangles, Sindoor, Bindi",
+    "Earrings"
   ],
-  "Skincare": [
-    "Sunscreen"
+  "Personal Care": [
+    "Face Wash",
+    "Shampoo & Conditioner",
+    "Soap",
+    "Toner Spray(Rose Water)",
+    "Moisturizer(Face + Body)",
+    "Sunscreen",
+    "Lip balm",
+    "Makeup essentials",
+    "Comb",
+    "Hair Serum",
+    "Hair Oil",
+    "Dryer",
+    "Contact lenses + Solutions"
+  ],
+  "Toiletries": [
+    "Toothpaste",
+    "Tootbrush",
+    "Hand Sanitizer",
+    "Wet Wipes",
+    "Napkins",
+    "Towels",
+    "Trimmer/Razor",
+    "Sanitary Pads"
+  ],
+  "Electronics": [
+    "Mobile Phones",
+    "Phone charges",
+    "Powerbank",
+    "Speaker",
+    "Charging cables",
+    "Earphones/Headphones",
+    "Laptop/iPad",
+    "Camera + Memory Card"
   ],
   "Documents": [
-    "Passport",
-    "ID",
-    "Insurance"
+    "Tickets(Train/Bus/Flight)",
+    "Hotel Reservations",
+    "Activity Tickets(if any)",
+    "IDs",
+    "Passport(F)",
+    "Visa(F)",
+    "Travel Insurance(F)",
+    "Covid Vaccine Certificate",
+    "Online Registration",
+    "Passes(if any)"
   ],
-  "Tickets": [
-    "Flight ticket"
+  "Money & Finances": [
+    "Cash",
+    "Cards",
+    "Wallet",
+    "Splitwise Group"
   ],
-  "Car related": [
-    "Insurance"
+  "Health & Safety": [
+    "Paracetamol",
+    "Azythromycin(Cold Flu)",
+    "Moov",
+    "Band Aid",
+    "Antacid(Eno/Pudeenhara)",
+    "Knee Cap(O)",
+    "Local Emergency Numbers",
+    "Emergency Contacts",
+    "Personal Medicines",
+    "Alkasol",
+    "Migrain(Naxdom/NapraD)",
+    "Pee Safe"
   ],
-  "Hiking": [
-    "Boots"
+  "Other Handy Items": [
+    "Bagpack",
+    "Water Bottles",
+    "Offline maps",
+    "Snacks",
+    "Phone's Water Cover",
+    "Local Apps(F)",
+    "Protein Bard/Chocolates",
+    "ORS Solution",
+    "Chewing Gums",
+    "Swiss Knife",
+    "Specs Box",
+    "Poythene",
+    "Vaccum Bags",
+    "Torch(O)"
   ],
-  "Air Travel": [
-    "Neck pillow"
+  "Foreign Travel": [
+    "Ready To Eat items",
+    "Forex - Cash & Cards",
+    "Passport, Visa",
+    "Travel Insurance",
+    "Travel Adapter",
+    "eSIM",
+    "Kettle",
+    "Utensils"
   ],
-  "International Travel": [
-    "Adapter"
+  "Car": [
+    "Recharge Fastag",
+    "Petrol",
+    "Tyre Pressure",
+    "All documents up to date"
   ]
 }
