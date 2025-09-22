@@ -21,6 +21,7 @@
     saveBtn: document.getElementById('saveBtn'),
     loadBtn: document.getElementById('loadBtn'),
     addCatBtn: document.getElementById('addCatBtn'),
+    linkBtn: document.getElementById('linkBtn'),
     banner: document.getElementById('banner')
   };
 
@@ -43,35 +44,39 @@
 
     // always persist to localStorage as an in-browser backup
     try{ localStorage.setItem('travel-checklist:json', json); }catch(e){ /* ignore */ }
-
-    // try File System Access API (reuse existing handle if possible)
-    if(window.showSaveFilePicker || fileHandle){
-      try{
-        let handle = fileHandle;
-        if(!handle){
-          handle = await window.showSaveFilePicker({
-            suggestedName: FILE_NAME,
-            types:[{description:'JSON',accept:{'application/json':['.json']}}]
-          });
+    // 1) Try server-side write via HTTP PUT to ./travel-checklist.json (works if the server allows writes)
+    try{
+      if(location.protocol.startsWith('http')){
+        const resp = await fetch('./' + FILE_NAME, {method: 'PUT', body: json, headers: {'Content-Type':'application/json'}});
+        if(resp.ok){
+          showBanner('Saved checklist to server file');
+          return;
         }
-        const writable = await handle.createWritable();
+      }
+    }catch(e){
+      // ignore - many static servers don't accept PUT
+    }
+
+    // 2) If we have a File System Access handle (user previously granted), write directly without opening a picker
+    if(fileHandle){
+      try{
+        const writable = await fileHandle.createWritable();
         await writable.write(json);
         await writable.close();
-        fileHandle = handle;
-        showBanner('Saved checklist to "' + (handle.name||FILE_NAME) + '"');
+        showBanner('Saved checklist to "' + (fileHandle.name || FILE_NAME) + '"');
         return;
       }catch(err){
-        console.warn('Save via FS API failed',err);
+        console.warn('Write to existing file handle failed', err);
       }
     }
 
-    // fallback: create blob and download
+    // 3) Fallback: create blob and auto-download (no file-explorer dialog). This saves to the browser Downloads folder.
     const blob = new Blob([json],{type:'application/json'});
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url; a.download = FILE_NAME; document.body.appendChild(a); a.click(); a.remove();
     URL.revokeObjectURL(url);
-    showBanner('Downloaded ' + FILE_NAME);
+    showBanner('Downloaded ' + FILE_NAME + ' to your Downloads folder');
   }
 
   async function loadFromFile(){
@@ -107,6 +112,40 @@
       }
     };
     input.click();
+  }
+
+  // --- IndexedDB helper to persist a file handle (for browsers that support storing handles)
+  function idbOpen(){
+    return new Promise((resolve, reject)=>{
+      const req = indexedDB.open('travel-checklist', 1);
+      req.onupgradeneeded = ()=>{
+        const db = req.result;
+        if(!db.objectStoreNames.contains('handles')) db.createObjectStore('handles');
+      };
+      req.onsuccess = ()=> resolve(req.result);
+      req.onerror = ()=> reject(req.error);
+    });
+  }
+
+  async function saveHandleToIDB(key, handle){
+    try{
+      const db = await idbOpen();
+      const tx = db.transaction('handles','readwrite');
+      tx.objectStore('handles').put(handle, key);
+      return tx.complete;
+    }catch(e){ console.warn('idb save failed',e); }
+  }
+
+  async function getHandleFromIDB(key){
+    try{
+      const db = await idbOpen();
+      return new Promise((resolve,reject)=>{
+        const tx = db.transaction('handles','readonly');
+        const req = tx.objectStore('handles').get(key);
+        req.onsuccess = ()=> resolve(req.result);
+        req.onerror = ()=> resolve(null);
+      });
+    }catch(e){ return null; }
   }
 
   // --- render ---
@@ -245,6 +284,26 @@
     });
   }
 
+  // Link root JSON file to allow silent overwrite on future saves
+  if(dom.linkBtn){
+    dom.linkBtn.addEventListener('click', async ()=>{
+      if(!window.showOpenFilePicker){
+        alert('Your browser does not support the File System Access API required for linking.');
+        return;
+      }
+      try{
+        const [h] = await window.showOpenFilePicker({types:[{description:'JSON',accept:{'application/json':['.json']}}],multiple:false});
+        // optionally check name
+        if(h.name !== FILE_NAME){
+          if(!confirm('Selected file is "' + h.name + '". Link anyway?')) return;
+        }
+        fileHandle = h;
+        await saveHandleToIDB('root-file', h);
+        showBanner('Linked ' + (h.name||FILE_NAME));
+      }catch(e){ console.warn('link cancelled',e); }
+    });
+  }
+
   // initial load: try root JSON, then localStorage, then default
   async function init(){
     // 1) try to fetch from same folder: ./travel-checklist.json
@@ -269,6 +328,22 @@
     data = deepClone(DEFAULT);
     render();
   }
+
+  // Try to restore a stored handle so saves can be silent (if supported)
+  (async function restoreHandle(){
+    if(!window.showSaveFilePicker || !window.indexedDB) return;
+    try{
+      const h = await getHandleFromIDB('root-file');
+      if(h){
+        // verify permission by requesting writable permission
+        const perm = await h.requestPermission({mode:'readwrite'}).catch(()=>null);
+        if(perm === 'granted' || perm === 'prompt'){
+          fileHandle = h;
+          console.log('Restored file handle for silent saves');
+        }
+      }
+    }catch(e){ console.warn('restore handle failed', e); }
+  })();
 
   // autosave to localStorage so user doesn't lose in-session edits
   setInterval(()=>{ try{ syncFromUI(); localStorage.setItem('travel-checklist:json', JSON.stringify(data)); }catch(e){} }, 2000);

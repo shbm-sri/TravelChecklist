@@ -5,12 +5,10 @@
   ],
   "Accessories": [
     "Sunglasses",
-    "Hat",
     "Watch"
   ],
   "Skincare": [
-    "Sunscreen",
-    "Moisturizer"
+    "Sunscreen"
   ],
   "Documents": [
     "Passport",
@@ -21,21 +19,15 @@
     "Flight ticket"
   ],
   "Car related": [
-    "Insurance",
-    "Registration",
-    "Charger"
+    "Insurance"
   ],
   "Hiking": [
-    "Boots",
-    "Backpack",
-    "Water bottle"
+    "Boots"
   ],
   "Air Travel": [
-    "Neck pillow",
-    "Noise-cancelling headphones"
+    "Neck pillow"
   ],
   "International Travel": [
-    "Adapter",
-    "Copies of passport"
+    "Adapter"
   ]
 }
