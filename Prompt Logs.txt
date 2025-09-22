@@ -1,0 +1,13 @@
+You're an expert website designer. I need to create an application to keep a checklist of all items I need during my travel. Below are the requirements -
+1. Have different categories like Clothes, accessories, Skincare, Documents, Tickets, Car related, Hiking, Air Travel, International Travel, etc
+2. Give an option to save the data. Once user clicks on 'Save', create a .json file in the root folder and dump all the data.
+3. Use the .json file everytime the application loads.
+4. Give a uniform Add Item button for each category, that add a new entry. Don't do it in popup, just append to the existing UI and let users Edit there.
+5. Give an option to Delete an Item or Category
+6. Upon successful save, give a banner indicating data was successfully saved.
+
+Keep the UX and UI very intuitive and easy to use.
+Ensure the UI is not cluttered and can adapt on multiple screens.
+Ensure the colors are aesthetic and give a feel of travel mode.
+Don't use heavy libraries, keep it plan and simple so that it's easier to debug and understand.
+I don't need a backend or a database for this. Do it in place.

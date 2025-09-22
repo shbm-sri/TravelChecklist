@@ -1,0 +1,41 @@
+{
+  "Clothes": [
+    "Underwear",
+    "Sleepwear"
+  ],
+  "Accessories": [
+    "Sunglasses",
+    "Hat",
+    "Watch"
+  ],
+  "Skincare": [
+    "Sunscreen",
+    "Moisturizer"
+  ],
+  "Documents": [
+    "Passport",
+    "ID",
+    "Insurance"
+  ],
+  "Tickets": [
+    "Flight ticket"
+  ],
+  "Car related": [
+    "Insurance",
+    "Registration",
+    "Charger"
+  ],
+  "Hiking": [
+    "Boots",
+    "Backpack",
+    "Water bottle"
+  ],
+  "Air Travel": [
+    "Neck pillow",
+    "Noise-cancelling headphones"
+  ],
+  "International Travel": [
+    "Adapter",
+    "Copies of passport"
+  ]
+}
